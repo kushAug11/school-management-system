@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GreenLeaf - Login</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #e8f5e9; display: flex; flex-direction: column; height: 100vh; margin: 0; }
+        header, footer { background: #2d5a27; color: white; padding: 15px; text-align: center; }
+        .content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .login-box { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        input { display: block; margin: 10px 0; padding: 10px; width: 250px; border: 1px solid #ccc; border-radius: 5px; }
+        button { background: #2d5a27; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <header><h1>GreenLeaf Nursery Management</h1></header>
+    <div class="content">
+        <div class="login-box">
+            <h2>Staff Login</h2>
+            {% with messages = get_flashed_messages() %}{% if messages %}
+                {% for m in messages %}<p style="color: red;">{{m}}</p>{% endfor %}
+            {% endif %}{% endwith %}
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.email(placeholder="Email") }}
+                {{ form.pwd(placeholder="Password") }}
+                <button type="submit">Enter Nursery</button>
+            </form>
+        </div>
+    </div>
+    <footer>© 2025 GreenLeaf Botanical Solutions</footer>
+</body>
+</html>

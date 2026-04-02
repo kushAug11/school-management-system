@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMS School Management System</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .header-icon {
+            font-size: 24px;
+            color: #3b82f6;
+            margin-right: 15px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 40px;
+            gap: 40px;
+        }
+
+        .card {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        .card p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #666666;
+            margin-top: 0;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .btn {
+            background-color: #0d6efd;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #0b5ed7;
+        }
+
+        /* SVG icon styling for the building */
+        .building-icon {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                margin: 40px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-icon">
+            <svg class="building-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L4 6v16h16V6l-8-4zM6 10h2v2H6v-2zm0 4h2v2H6v-2zm6 6h-2v-4h2v4zm-2-6h2v2h-2v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2z" fill="#0d6efd"/>
+            </svg>
+        </div>
+        <h1>AMS School Management System</h1>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>Resource Management</h2>
+            <p>Admin related activites are handled through this portal such as resource management. Login through the below portal to get acces to them.</p>
+            <button class="btn">Admin Login</button>
+        </div>
+
+        <div class="card">
+            <h2>Attendance Management</h2>
+            <p>Attendance management is handled through this portal. Login as teacher to start and view attendance. Login as student to mark your attendance.</p>
+            <button class="btn">Attendance</button>
+        </div>
+
+        <div class="card">
+            <h2>Application Portal</h2>
+            <p>Want to join AMS School? Go ahead and put forward your application. We'll get back to you soon with the results about your application.</p>
+            <button class="btn">Apply</button>
+        </div>
+    </div>
+
+</body>
+</html>

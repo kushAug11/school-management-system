@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenLeaf - Sales History</title>
+    <style>
+        /* General Styling */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f1f8e9; /* Light Mint Green */
+            margin: 0; 
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        nav { 
+            background: #2d5a27; /* Deep Forest Green */
+            padding: 15px 30px; 
+            color: white; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        nav .logo { font-size: 1.5rem; font-weight: bold; }
+        nav a { 
+            color: white; 
+            margin-left: 20px; 
+            text-decoration: none; 
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover { color: #a5d6a7; }
+
+        /* Main Container */
+        .container { 
+            max-width: 1000px; 
+            margin: 40px auto; 
+            padding: 20px;
+        }
+
+        /* History Card */
+        .history-card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            border-top: 6px solid #2d5a27; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        h2 { color: #2d5a27; margin-top: 0; border-bottom: 2px solid #e8f5e9; padding-bottom: 10px; }
+
+        /* Table Styling */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+        }
+        th { 
+            background-color: #f9fdf9; 
+            color: #2d5a27; 
+            text-align: left; 
+            padding: 15px; 
+            border-bottom: 2px solid #2d5a27;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        td { 
+            padding: 15px; 
+            border-bottom: 1px solid #eee; 
+            font-size: 0.95rem;
+        }
+        tr:hover { background-color: #f1f8e9; }
+
+        /* Empty State */
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Badge/Tag for Totals */
+        .cost-tag {
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2d5a27;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <span class="logo">🌿 GreenLeaf Nursery</span>
+        <div>
+            <a href="{{ url_for('main_bp.dashboard') }}">Stock Inventory</a>
+            <a href="{{ url_for('main_bp.history') }}" style="border-bottom: 2px solid white; padding-bottom: 5px;">Order History</a>
+            <a href="{{ url_for('main_bp.logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="history-card">
+            <h2>Your Sales History</h2>
+            <p>Logged in as: <strong>{{ user_name }}</strong></p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Plant Species</th>
+                        <th>Nursery Section</th>
+                        <th>Quantity Sold</th>
+                        <th>Total Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if orders %}
+                        {% for order in orders %}
+                        <tr>
+                            <td>#{{ order.order_id }}</td>
+                            <td><strong>{{ order.plant_name }}</strong></td>
+                            <td>{{ order.nursery_section }}</td>
+                            <td>{{ order.quantity }} units</td>
+                            <td class="cost-tag">Rs. {{ "{:,}".format(order.total_cost) }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="no-data">No sales records found for this account.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+            <a href="{{ url_for('main_bp.dashboard') }}" class="back-btn">← Back to Nursery Dashboard</a>
+        </div>
+    </div>
+
+</body>
+</html>

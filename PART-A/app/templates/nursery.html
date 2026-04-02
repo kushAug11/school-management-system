@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nursery Dashboard</title>
+    <style>
+        body { font-family: sans-serif; background: #f1f8e9; margin: 0; }
+        nav { background: #2d5a27; padding: 15px; color: white; display: flex; justify-content: space-between; }
+        nav a { color: white; margin-left: 20px; text-decoration: none; }
+        .container { padding: 20px; display: flex; gap: 20px; }
+        .box { background: white; padding: 20px; border-radius: 8px; border-top: 5px solid #2d5a27; flex: 1; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
+        select, input { padding: 8px; margin-bottom: 10px; width: 100%; }
+        .btn { background: #4caf50; color: white; border: none; padding: 10px; cursor: pointer; width: 100%; }
+    </style>
+</head>
+<body>
+    <nav>
+        <span>GreenLeaf Nursery | Welcome, {{ user_name }}</span>
+        <div>
+            <a href="{{ url_for('main_bp.dashboard') }}">Stock</a>
+            <a href="{{ url_for('main_bp.history') }}">Sales History</a>
+            <a href="{{ url_for('main_bp.logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="box" style="max-width: 300px;">
+            <h3>Purchase Plants</h3>
+            <form method="GET" action="{{ url_for('main_bp.dashboard') }}">
+                <label>Filter Section:</label>
+                <select name="section_name" onchange="this.form.submit()">
+                    <option value="">All Sections</option>
+                    {% for s in sections %}
+                    <option value="{{s}}" {% if s == selected_sec %}selected{% endif %}>{{s}}</option>
+                    {% endfor %}
+                </select>
+            </form>
+
+            <form method="POST">
+                <input type="hidden" name="section_name" value="{{ selected_sec }}">
+                <label>Select Plant:</label>
+                <select name="plant_name">
+                    {% for item in inventory %}
+                    <option value="{{item.plant_name}}">{{item.plant_name}} (Rs.{{item.price}})</option>
+                    {% endfor %}
+                </select>
+                <label>Quantity:</label>
+                <input type="number" name="qty" min="1" required>
+                <button type="submit" class="btn">Place Order</button>
+            </form>
+            {% with messages = get_flashed_messages() %}{% if messages %}
+                {% for m in messages %}<p style="color: green; font-weight: bold;">{{m}}</p>{% endfor %}
+            {% endif %}{% endwith %}
+        </div>
+        <div class="box">
+            <h3>Current Inventory ({{ selected_sec if selected_sec else 'All' }})</h3>
+            <table>
+                <tr><th>Plant Name</th><th>Section</th><th>Stock</th><th>Price</th></tr>
+                {% for item in inventory %}
+                <tr>
+                    <td>{{ item.plant_name }}</td>
+                    <td>{{ item.nursery_section }}</td>
+                    <td>{{ item.stock_count }}</td>
+                    <td>Rs. {{ item.price }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
