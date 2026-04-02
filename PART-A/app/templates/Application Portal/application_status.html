@@ -4,8 +4,368 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Status</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            border-bottom: 1px solid #eaeaea;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-icon {
+            font-size: 24px;
+            color: #3b82f6;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .building-icon {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        /* Navigation Menu styling */
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: #3b82f6;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #2563eb;
+        }
+
+        .nav-btn {
+            background-color: #0d6efd;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Form Card */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 30px 40px;
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-card h2 {
+            font-size: 22px;
+            font-weight: 500;
+            color: #1a202c;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #90cdf4; /* Light blue border */
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            color: #2d3748;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: #3b82f6;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #0d6efd;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: #0b5ed7;
+        }
+
+        /* -------------------------
+           TIMELINE VIEW STYLES
+           ------------------------- */
+        
+        .timeline-container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .timeline-title {
+            font-size: 24px;
+            color: #2d3748;
+            font-weight: 500;
+            margin-bottom: 60px;
+        }
+
+        .timeline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+            margin-bottom: 80px;
+        }
+
+        /* Connecting Lines */
+        .timeline-line {
+            position: absolute;
+            top: 14px; /* Center of the 28px circles */
+            left: 0;
+            right: 0;
+            height: 6px;
+            background-color: #e2e8f0; /* Default grey */
+            z-index: 1;
+        }
+        
+        /* The filled portion of the line */
+        .timeline-line-filled {
+            position: absolute;
+            top: 14px;
+            left: 0;
+            height: 6px;
+            background-color: #ecc94b; /* Yellow/Orange */
+            z-index: 2;
+            transition: width 0.3s ease;
+        }
+
+        .step {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100px;
+        }
+
+        .step-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 2px solid #fc8181; /* Red/coral outline */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .step.filled .step-circle {
+            background-color: #00bcd4; /* Cyan fill */
+        }
+
+        .step-label {
+            font-size: 14px;
+            color: #4a5568;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .btn-withdraw {
+            background-color: #f56565;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-withdraw:hover {
+            background-color: #e53e3e;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Application Status</h1>
+
+    <div class="header">
+        <div class="header-left">
+            <div class="header-icon">
+                <svg class="building-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L4 6v16h16V6l-8-4zM6 10h2v2H6v-2zm0 4h2v2H6v-2zm6 6h-2v-4h2v4zm-2-6h2v2h-2v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2z" fill="#0d6efd"/>
+                </svg>
+            </div>
+            <h1>Application Portal</h1>
+        </div>
+        
+        <div class="header-nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Apply</a>
+            <a href="#" class="nav-btn">Status</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        
+        <!-- /// STATE ITERATOR COMMENT /// -->
+        <!-- Use Jinja logic to toggle between showing the login form and showing the applicant timeline. -->
+        <!-- Example: 
+        {% if applicant_data %} 
+             ... show the timeline ...
+        {% else %}
+             ... show the login form ...
+        {% endif %} 
+        -->
+
+        <!-- STATE 1: Status Login Form -->
+        <!-- (Set style="display:none;" on this block when applicant_data is present) -->
+        <div class="login-card" style="display: flex;">
+            <h2>Show Status</h2>
+            
+            <form action="{{ url_for('application_status') if application_status else '#' }}" method="POST" style="width: 100%;">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <!-- Note the light blue border color applied in CSS to match screenshot closely -->
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Login</button>
+            </form>
+        </div>
+
+
+        <!-- STATE 2: Applicant Status Timeline -->
+        <!-- (Set style="display:none;" on this block when applicant_data is missing) -->
+        <!-- In this dummy preview I set it to display:none. Remove display:none to view it. -->
+        <div class="timeline-container" style="display: none;">
+            <h2 class="timeline-title">Application Status of {{ applicant_name | default('Nia Stanley') }}</h2>
+            
+            <div class="timeline">
+                <!-- Background grey line spanning full width -->
+                <div class="timeline-line"></div>
+                
+                <!-- Dynamic Yellow filled line -->
+                <!-- Width logic: 
+                     If status is Applied/Pending: width: 0%
+                     If status is Review Ongoing: width: 50%
+                     If status is Accepted/Rejected: width: 100% 
+                -->
+                <div class="timeline-line-filled" style="width: 50%;"></div>
+                
+                <!-- Step 1 -->
+                <div class="step filled">
+                    <div class="step-circle"></div>
+                    <div class="step-label">Applied</div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="step filled">
+                    <div class="step-circle"></div>
+                    <div class="step-label">Review<br>Ongoing</div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="step">
+                    <div class="step-circle"></div>
+                    <div class="step-label">Decision<br>Pending</div>
+                </div>
+            </div>
+
+            <!-- Withdraw button -->
+            <form action="{{ url_for('withdraw_application') if withdraw_application else '#' }}" method="POST">
+                <input type="hidden" name="email" value="{{ applicant_email }}">
+                <button type="submit" class="btn-withdraw">Withdraw Application</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- For demonstration purposes only, script to toggle views (you can remove this when wiring Jinja) -->
+    <script>
+        // Set to true to view the Timeline, false to view the Login card
+        const simulateLoggedIn = false; 
+
+        if (simulateLoggedIn) {
+            document.querySelector('.login-card').style.display = 'none';
+            document.querySelector('.timeline-container').style.display = 'flex';
+        }
+    </script>
 </body>
 </html>

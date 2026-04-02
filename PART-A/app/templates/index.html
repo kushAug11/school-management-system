@@ -75,6 +75,7 @@
             font-weight: 500;
             cursor: pointer;
             text-decoration: none;
+            display: inline-block;
             transition: background-color 0.2s;
         }
 
@@ -112,19 +113,22 @@
         <div class="card">
             <h2>Resource Management</h2>
             <p>Admin related activites are handled through this portal such as resource management. Login through the below portal to get acces to them.</p>
-            <button class="btn">Admin Login</button>
+            <!-- Routes to Admin Login page -->
+            <a href="{{ url_for('admin_login') if admin_login else '#' }}" class="btn">Admin Login</a>
         </div>
 
         <div class="card">
             <h2>Attendance Management</h2>
             <p>Attendance management is handled through this portal. Login as teacher to start and view attendance. Login as student to mark your attendance.</p>
-            <button class="btn">Attendance</button>
+            <!-- Routes to User/Attendance Login page -->
+            <a href="{{ url_for('attendance_login') if attendance_login else '#' }}" class="btn">Attendance</a>
         </div>
 
         <div class="card">
             <h2>Application Portal</h2>
             <p>Want to join AMS School? Go ahead and put forward your application. We'll get back to you soon with the results about your application.</p>
-            <button class="btn">Apply</button>
+            <!-- Routes to Application Landing page -->
+            <a href="{{ url_for('application_home') if application_home else '#' }}" class="btn">Apply</a>
         </div>
     </div>
 

@@ -4,8 +4,343 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Educator Management</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        /* Header Styling */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-icon {
+            font-size: 24px;
+            color: #3b82f6;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .building-icon {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        /* Navigation Menu styling */
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: #3b82f6;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #2563eb;
+        }
+
+        .nav-btn {
+            background-color: #0d6efd;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-btn.logout {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+        
+        .nav-btn.logout:hover {
+            background-color: #bb2d3b;
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        /* Title Area */
+        .title-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .title-area h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            color: #4a5568;
+        }
+
+        .btn-add {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #f6e05e;
+            background-color: #fffff0;
+            color: #d69e2e;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .btn-add:hover {
+            background-color: #fefcbf;
+        }
+
+        .btn-add svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #d0f4f4; /* Light cyan header */
+            color: #1a202c;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 12px 15px;
+        }
+
+        /* Specific subtle width for icon columns */
+        th:nth-child(4), th:nth-child(5) {
+            width: 100px;
+            text-align: center;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 13px;
+            color: #4a5568;
+            vertical-align: middle;
+        }
+
+        td:nth-child(4), td:nth-child(5) {
+            text-align: center;
+        }
+
+        /* Action Buttons Inner Table */
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            background-color: #ffffff;
+            cursor: pointer;
+            border: 1px solid;
+            transition: opacity 0.2s;
+        }
+
+        .btn-icon:hover {
+            opacity: 0.8;
+        }
+
+        .btn-edit {
+            border-color: #90cdf4;
+            color: #3b82f6;
+        }
+
+        .btn-delete {
+            border-color: #feb2b2;
+            color: #e53e3e;
+        }
+
+        /* SVGs for icons */
+        .icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+    </style>
 </head>
 <body>
-    <h1>Educator Management</h1>
+
+    <!-- Header Navigation -->
+    <div class="header">
+        <div class="header-left">
+            <div class="header-icon">
+                <!-- Building Icon -->
+                <svg class="building-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L4 6v16h16V6l-8-4zM6 10h2v2H6v-2zm0 4h2v2H6v-2zm6 6h-2v-4h2v4zm-2-6h2v2h-2v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2z" fill="#0d6efd"/>
+                </svg>
+            </div>
+            <h1>Resource Management</h1>
+        </div>
+        
+        <div class="header-nav">
+            <a href="{{ url_for('admin_home') if admin_home else '#' }}" class="nav-link">Home</a>
+            <!-- Educator is currently active, so it has blue background -->
+            <a href="#" class="nav-btn">Educator</a>
+            <a href="#" class="nav-link">Admission</a>
+            <a href="#" class="nav-btn logout">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="container">
+        
+        <div class="title-area">
+            <h2>AMS School Educators</h2>
+            
+            <!-- Add Educator Button -->
+            <a href="#" class="btn-add" title="Add Educator">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <!-- User + Icon -->
+                    <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+            </a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Educator Name</th>
+                    <th>Educator User Name</th>
+                    <th>Edit Details</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- If using Jinja, you would wrap these rows in a loop like: -->
+                <!-- {% for educator in educators %} -->
+                <!-- <tr> <td>{{ educator.id }}</td> ... </tr> -->
+                <!-- {% endfor %} -->
+                
+                <!-- Hardcoded Rows based on Image -->
+                <tr>
+                    <td>1</td>
+                    <td>James Potter</td>
+                    <td>james.potter</td>
+                    <td>
+                        <button class="btn-icon btn-edit" title="Edit row">
+                            <svg class="icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Pencil edit icon -->
+                                <path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/>
+                            </svg>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn-icon btn-delete" title="Delete row">
+                            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <!-- X remove icon -->
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>2</td>
+                    <td>John Lark</td>
+                    <td>john.lark</td>
+                    <td>
+                        <button class="btn-icon btn-edit" title="Edit row">
+                            <svg class="icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/>
+                            </svg>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn-icon btn-delete" title="Delete row">
+                            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td>Ethan Hunt</td>
+                    <td>ethan.hunt</td>
+                    <td>
+                        <button class="btn-icon btn-edit" title="Edit row">
+                            <svg class="icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/>
+                            </svg>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn-icon btn-delete" title="Delete row">
+                            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td>Jane Smith</td>
+                    <td>jane.smith</td>
+                    <td>
+                        <button class="btn-icon btn-edit" title="Edit row">
+                            <svg class="icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/>
+                            </svg>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn-icon btn-delete" title="Delete row">
+                            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>

@@ -4,8 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start Attendance</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-icon {
+            font-size: 24px;
+            color: #3b82f6;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .building-icon {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: #3b82f6;
+            transition: color 0.2s;
+        }
+
+        .nav-btn {
+            background-color: #0d6efd;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-btn.logout {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+
+        /* Main area container */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .greeting {
+            width: 100%;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 60px;
+            color: #1a1a1a;
+            text-align: left;
+        }
+
+        /* Card holding the buttons */
+        .action-card {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 40px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .btn-action {
+            width: 100%;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: opacity 0.2s;
+        }
+
+        .btn-action:hover {
+            opacity: 0.9;
+        }
+
+        .btn-start {
+            background-color: #2f855a; /* Green */
+        }
+
+        .btn-stop {
+            background-color: #f08a8d; /* Coral/Light Red */
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Start Attendance</h1>
+
+    <div class="header">
+        <div class="header-left">
+            <div class="header-icon">
+                <svg class="building-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L4 6v16h16V6l-8-4zM6 10h2v2H6v-2zm0 4h2v2H6v-2zm6 6h-2v-4h2v4zm-2-6h2v2h-2v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2z" fill="#0d6efd"/>
+                </svg>
+            </div>
+            <h1>Attendance Management</h1>
+        </div>
+        
+        <div class="header-nav">
+            <a href="#" class="nav-btn">Start Attendance</a>
+            <a href="#" class="nav-link">View Attendance</a>
+            <a href="#" class="nav-btn logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Jinja dynamic greeting -->
+        <h2 class="greeting">Hi {{ educator_name | default('John Lark') }}</h2>
+
+        <div class="action-card">
+            <!-- Ensure these wrap in a form if they need to POST, or link to a route if GET -->
+            <form action="{{ url_for('start_attendance') if start_attendance else '#' }}" method="POST" style="width: 100%;">
+                <button type="submit" class="btn-action btn-start">Start Attendance</button>
+            </form>
+            
+            <form action="{{ url_for('stop_attendance') if stop_attendance else '#' }}" method="POST" style="width: 100%;">
+                <button type="submit" class="btn-action btn-stop">Stop Attendance</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>

@@ -3,9 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance Marking</title>
+    <title>Mark Attendance</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-icon {
+            font-size: 24px;
+            color: #3b82f6;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .building-icon {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-btn.logout {
+            background-color: #dc3545;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-btn.logout:hover {
+            background-color: #bb2d3b;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title {
+            width: 100%;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 60px;
+            color: #4a5568;
+            text-align: left;
+        }
+
+        /* The marking card */
+        .marking-card {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 40px;
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .student-name {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1a202c;
+            margin: 0;
+        }
+
+        .btn-mark {
+            width: 100%;
+            background-color: #0d6efd;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-mark:hover {
+            background-color: #0b5ed7;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Attendance Marking</h1>
+
+    <div class="header">
+        <div class="header-left">
+            <div class="header-icon">
+                <svg class="building-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L4 6v16h16V6l-8-4zM6 10h2v2H6v-2zm0 4h2v2H6v-2zm6 6h-2v-4h2v4zm-2-6h2v2h-2v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2z" fill="#0d6efd"/>
+                </svg>
+            </div>
+            <h1>Attendance Management</h1>
+        </div>
+        
+        <div class="header-nav">
+            <!-- This user only sees Logout according to image -->
+            <a href="#" class="nav-btn logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="title">Mark Attendance</h2>
+
+        <div class="marking-card">
+            
+            <!-- /// ITERATOR COMMENT /// -->
+            <!-- If logged in as Educator taking multiple attendances at once, you might wrap this card -->
+            <!-- in a `{% for student in students %}` loop to map all students. Or, if this is just -->
+            <!-- the Student's portal for them to mark themselves, simply render their name directly: -->
+            <!-- <h3 class="student-name">{{ student_name }}</h3> -->
+            
+            <h3 class="student-name">{{ session.student_name | default('Desmond Benjamin') }}</h3>
+            
+            <form action="{{ url_for('mark_attendance') if mark_attendance else '#' }}" method="POST" style="width: 100%;">
+                <input type="hidden" name="student_id" value="{{ student_id | default(1) }}">
+                <button type="submit" class="btn-mark">Mark Attendance</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>

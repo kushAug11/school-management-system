@@ -4,8 +4,405 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admission Management</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        /* Header Styling */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-icon {
+            font-size: 24px;
+            color: #3b82f6;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .building-icon {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        /* Navigation Menu styling */
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: #3b82f6;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #2563eb;
+        }
+
+        .nav-btn {
+            background-color: #0d6efd;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-btn.logout {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+        
+        .nav-btn.logout:hover {
+            background-color: #bb2d3b;
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        /* Title Area */
+        .title-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .title-area h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            color: #4a5568;
+        }
+
+        /* Status Filters */
+        .status-filters {
+            display: flex;
+            background: #ffffff;
+            border-radius: 4px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid #ecc94b; /* yellow border */
+            color: #d69e2e;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn:first-child {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            border-right: none;
+        }
+        
+        .filter-btn:last-child {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            border-left: none;
+        }
+
+        /* Active Filter */
+        .filter-btn.active {
+            background-color: #ecc94b; /* Solid yellow background */
+            color: #744210; /* Dark text for contrast */
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background-color: #fffff0;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #d0f4f4; /* Light cyan header */
+            color: #1a202c;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 12px 15px;
+        }
+
+        td {
+            padding: 14px 15px;
+            font-size: 13px;
+            color: #4a5568;
+            vertical-align: middle;
+        }
+        
+        /* Striped rows for better readability */
+        tbody tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        /* Action Buttons and Pills */
+        .pill-btn {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        /* Name pill (blue outline) */
+        .name-pill {
+            border-color: #90cdf4;
+            color: #3b82f6;
+        }
+        
+        .name-pill:hover {
+            background-color: #ebf8ff;
+        }
+
+        /* Accept button (green outline) */
+        .btn-accept {
+            border-color: #68d391;
+            color: #38a169;
+            margin-right: 8px;
+        }
+        
+        .btn-accept:hover {
+            background-color: #f0fff4;
+        }
+
+        /* Reject button (red outline) */
+        .btn-reject {
+            border-color: #feb2b2;
+            color: #e53e3e;
+        }
+        
+        .btn-reject:hover {
+            background-color: #fff5f5;
+        }
+        
+        .actions-cell {
+            white-space: nowrap;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Admission Management</h1>
+
+    <!-- Header Navigation -->
+    <div class="header">
+        <div class="header-left">
+            <div class="header-icon">
+                <svg class="building-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L4 6v16h16V6l-8-4zM6 10h2v2H6v-2zm0 4h2v2H6v-2zm6 6h-2v-4h2v4zm-2-6h2v2h-2v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2z" fill="#0d6efd"/>
+                </svg>
+            </div>
+            <h1>Resource Management</h1>
+        </div>
+        
+        <div class="header-nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Educator</a>
+            <!-- Admission is currently active, so it has blue background -->
+            <a href="#" class="nav-btn">Admission</a>
+            <a href="#" class="nav-btn logout">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="container">
+        
+        <div class="title-area">
+            <h2>Applications</h2>
+            
+            <!-- Status Filters -->
+            <div class="status-filters">
+                <a href="#" class="filter-btn active">Pending</a>
+                <a href="#" class="filter-btn">Approved</a>
+                <a href="#" class="filter-btn">Rejected</a>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Application ID</th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>DOB</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- /// IMPORTANT: DATABSE ITERATOR COMMENT /// -->
+                <!-- Use a Jinja templating loop here to dynamically create rows from your backend. -->
+                <!-- Example implementation:
+                
+                {% for application in applications %}
+                <tr>
+                    <td>{{ application.id }}</td>
+                    <td><a href="#" class="pill-btn name-pill">{{ application.student_name }}</a></td>
+                    <td>{{ application.email }}</td>
+                    <td>{{ application.dob }}</td>
+                    <td class="actions-cell">
+                        <form action="{{ url_for('accept_application', id=application.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="pill-btn btn-accept">Accept</button>
+                        </form>
+                        <form action="{{ url_for('reject_application', id=application.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="pill-btn btn-reject">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                
+                -->
+                
+                <!-- Hardcoded fallback rows matching the image exactly -->
+                <tr>
+                    <td>1</td>
+                    <td><span class="pill-btn name-pill">Nia Stanley</span></td>
+                    <td>nia@email.com</td>
+                    <td>March 03/31/05, 2005</td>
+                    <td class="actions-cell">
+                        <button class="pill-btn btn-accept">Accept</button>
+                        <button class="pill-btn btn-reject">Reject</button>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>2</td>
+                    <td><span class="pill-btn name-pill">Andy Hull</span></td>
+                    <td>andy@email.com</td>
+                    <td>February 02/10/05, 2005</td>
+                    <td class="actions-cell">
+                        <button class="pill-btn btn-accept">Accept</button>
+                        <button class="pill-btn btn-reject">Reject</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td><span class="pill-btn name-pill">Jane Wright</span></td>
+                    <td>jwright@email.com</td>
+                    <td>April 04/02/05, 2005</td>
+                    <td class="actions-cell">
+                        <button class="pill-btn btn-accept">Accept</button>
+                        <button class="pill-btn btn-reject">Reject</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td><span class="pill-btn name-pill">Emory Frye</span></td>
+                    <td>emory@email.com</td>
+                    <td>April 04/28/05, 2005</td>
+                    <td class="actions-cell">
+                        <button class="pill-btn btn-accept">Accept</button>
+                        <button class="pill-btn btn-reject">Reject</button>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>5</td>
+                    <td><span class="pill-btn name-pill">Kabir Sutton</span></td>
+                    <td>skabir@email.com</td>
+                    <td>January 01/31/05, 2005</td>
+                    <td class="actions-cell">
+                        <button class="pill-btn btn-accept">Accept</button>
+                        <button class="pill-btn btn-reject">Reject</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>6</td>
+                    <td><span class="pill-btn name-pill">Kyra Stone</span></td>
+                    <td>kyras@email.com</td>
+                    <td>May 04/02/05, 2005</td>
+                    <td class="actions-cell">
+                        <button class="pill-btn btn-accept">Accept</button>
+                        <button class="pill-btn btn-reject">Reject</button>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>7</td>
+                    <td><span class="pill-btn name-pill">Zora Hahn</span></td>
+                    <td>zorah@email.com</td>
+                    <td>May 05/03/05, 2005</td>
+                    <td class="actions-cell">
+                        <button class="pill-btn btn-accept">Accept</button>
+                        <button class="pill-btn btn-reject">Reject</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>8</td>
+                    <td><span class="pill-btn name-pill">Franco Marks</span></td>
+                    <td>fmarks@email.com</td>
+                    <td>June 06/11/05, 2005</td>
+                    <td class="actions-cell">
+                        <button class="pill-btn btn-accept">Accept</button>
+                        <button class="pill-btn btn-reject">Reject</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>9</td>
+                    <td><span class="pill-btn name-pill">Kye Peck</span></td>
+                    <td>kye12@email.com</td>
+                    <td>July 07/12/05, 2005</td>
+                    <td class="actions-cell">
+                        <button class="pill-btn btn-accept">Accept</button>
+                        <button class="pill-btn btn-reject">Reject</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>
