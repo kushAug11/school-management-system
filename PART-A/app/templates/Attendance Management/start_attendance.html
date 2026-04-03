@@ -161,11 +161,11 @@
 
         <div class="action-card">
             <!-- Ensure these wrap in a form if they need to POST, or link to a route if GET -->
-            <form action="{{ url_for('start_attendance') if start_attendance else '#' }}" method="POST" style="width: 100%;">
+            <form action="{{ url_for('main_bp.start_attendance') }}" method="POST" style="width: 100%;">
                 <button type="submit" class="btn-action btn-start">Start Attendance</button>
             </form>
             
-            <form action="{{ url_for('stop_attendance') if stop_attendance else '#' }}" method="POST" style="width: 100%;">
+            <form action="{{ url_for('main_bp.stop_attendance') }}" method="POST" style="width: 100%;">
                 <button type="submit" class="btn-action btn-stop">Stop Attendance</button>
             </form>
         </div>

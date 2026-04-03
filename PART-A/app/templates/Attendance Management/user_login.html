@@ -181,7 +181,7 @@
               {% endif %}
             {% endwith %}
 
-            <form action="{{ url_for('attendance_login') if attendance_login else '' }}" method="POST" style="width: 100%;">
+            <form action="{{ url_for('main_bp.attendance_login') }}" method="POST" style="width: 100%;">
                 
                 <div class="form-group">
                     <label for="user_role">User Role</label>

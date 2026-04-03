@@ -294,7 +294,7 @@
         <div class="login-card" style="display: flex;">
             <h2>Show Status</h2>
             
-            <form action="{{ url_for('application_status') if application_status else '#' }}" method="POST" style="width: 100%;">
+            <form action="{{ url_for('main_bp.application_status') }}" method="POST" style="width: 100%;">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <!-- Note the light blue border color applied in CSS to match screenshot closely -->
@@ -349,7 +349,7 @@
             </div>
 
             <!-- Withdraw button -->
-            <form action="{{ url_for('withdraw_application') if withdraw_application else '#' }}" method="POST">
+            <form action="{{ url_for('main_bp.withdraw_application') }}" method="POST">
                 <input type="hidden" name="email" value="{{ applicant_email }}">
                 <button type="submit" class="btn-withdraw">Withdraw Application</button>
             </form>

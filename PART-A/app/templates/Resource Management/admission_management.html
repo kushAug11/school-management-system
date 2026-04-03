@@ -277,129 +277,22 @@
             </thead>
             <tbody>
                 
-                <!-- /// IMPORTANT: DATABSE ITERATOR COMMENT /// -->
-                <!-- Use a Jinja templating loop here to dynamically create rows from your backend. -->
-                <!-- Example implementation:
-                
                 {% for application in applications %}
                 <tr>
                     <td>{{ application.id }}</td>
-                    <td><a href="#" class="pill-btn name-pill">{{ application.student_name }}</a></td>
+                    <td><a href="#" class="pill-btn name-pill">{{ application.name }}</a></td>
                     <td>{{ application.email }}</td>
                     <td>{{ application.dob }}</td>
                     <td class="actions-cell">
-                        <form action="{{ url_for('accept_application', id=application.id) }}" method="POST" style="display:inline;">
+                        <form action="{{ url_for('main_bp.accept_application', id=application.id) }}" method="POST" style="display:inline;">
                             <button type="submit" class="pill-btn btn-accept">Accept</button>
                         </form>
-                        <form action="{{ url_for('reject_application', id=application.id) }}" method="POST" style="display:inline;">
+                        <form action="{{ url_for('main_bp.reject_application', id=application.id) }}" method="POST" style="display:inline;">
                             <button type="submit" class="pill-btn btn-reject">Reject</button>
                         </form>
                     </td>
                 </tr>
                 {% endfor %}
-                
-                -->
-                
-                <!-- Hardcoded fallback rows matching the image exactly -->
-                <tr>
-                    <td>1</td>
-                    <td><span class="pill-btn name-pill">Nia Stanley</span></td>
-                    <td>nia@email.com</td>
-                    <td>March 03/31/05, 2005</td>
-                    <td class="actions-cell">
-                        <button class="pill-btn btn-accept">Accept</button>
-                        <button class="pill-btn btn-reject">Reject</button>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>2</td>
-                    <td><span class="pill-btn name-pill">Andy Hull</span></td>
-                    <td>andy@email.com</td>
-                    <td>February 02/10/05, 2005</td>
-                    <td class="actions-cell">
-                        <button class="pill-btn btn-accept">Accept</button>
-                        <button class="pill-btn btn-reject">Reject</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td><span class="pill-btn name-pill">Jane Wright</span></td>
-                    <td>jwright@email.com</td>
-                    <td>April 04/02/05, 2005</td>
-                    <td class="actions-cell">
-                        <button class="pill-btn btn-accept">Accept</button>
-                        <button class="pill-btn btn-reject">Reject</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>4</td>
-                    <td><span class="pill-btn name-pill">Emory Frye</span></td>
-                    <td>emory@email.com</td>
-                    <td>April 04/28/05, 2005</td>
-                    <td class="actions-cell">
-                        <button class="pill-btn btn-accept">Accept</button>
-                        <button class="pill-btn btn-reject">Reject</button>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>5</td>
-                    <td><span class="pill-btn name-pill">Kabir Sutton</span></td>
-                    <td>skabir@email.com</td>
-                    <td>January 01/31/05, 2005</td>
-                    <td class="actions-cell">
-                        <button class="pill-btn btn-accept">Accept</button>
-                        <button class="pill-btn btn-reject">Reject</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>6</td>
-                    <td><span class="pill-btn name-pill">Kyra Stone</span></td>
-                    <td>kyras@email.com</td>
-                    <td>May 04/02/05, 2005</td>
-                    <td class="actions-cell">
-                        <button class="pill-btn btn-accept">Accept</button>
-                        <button class="pill-btn btn-reject">Reject</button>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>7</td>
-                    <td><span class="pill-btn name-pill">Zora Hahn</span></td>
-                    <td>zorah@email.com</td>
-                    <td>May 05/03/05, 2005</td>
-                    <td class="actions-cell">
-                        <button class="pill-btn btn-accept">Accept</button>
-                        <button class="pill-btn btn-reject">Reject</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>8</td>
-                    <td><span class="pill-btn name-pill">Franco Marks</span></td>
-                    <td>fmarks@email.com</td>
-                    <td>June 06/11/05, 2005</td>
-                    <td class="actions-cell">
-                        <button class="pill-btn btn-accept">Accept</button>
-                        <button class="pill-btn btn-reject">Reject</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>9</td>
-                    <td><span class="pill-btn name-pill">Kye Peck</span></td>
-                    <td>kye12@email.com</td>
-                    <td>July 07/12/05, 2005</td>
-                    <td class="actions-cell">
-                        <button class="pill-btn btn-accept">Accept</button>
-                        <button class="pill-btn btn-reject">Reject</button>
-                    </td>
-                </tr>
-
             </tbody>
         </table>
     </div>

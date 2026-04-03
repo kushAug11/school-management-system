@@ -216,7 +216,7 @@
         <h2 class="page-title">Apply to AMS School</h2>
 
         <!-- Note: This form points to your backend route -->
-        <form action="{{ url_for('application_apply') if application_apply else '#' }}" method="POST">
+        <form action="{{ url_for('main_bp.application_apply') }}" method="POST">
             
             <div class="cards-wrapper">
                 

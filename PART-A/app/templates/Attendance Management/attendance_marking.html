@@ -154,7 +154,7 @@
             
             <h3 class="student-name">{{ session.student_name | default('Desmond Benjamin') }}</h3>
             
-            <form action="{{ url_for('mark_attendance') if mark_attendance else '#' }}" method="POST" style="width: 100%;">
+            <form action="{{ url_for('main_bp.mark_attendance') }}" method="POST" style="width: 100%;">
                 <input type="hidden" name="student_id" value="{{ student_id | default(1) }}">
                 <button type="submit" class="btn-mark">Mark Attendance</button>
             </form>
