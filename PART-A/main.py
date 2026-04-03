@@ -256,15 +256,30 @@ def get_students_attendance(attendance_id):
 
 
 # Helper to submit an application 
-def apply_application(name, email, dob):
+def apply_application(data):
     global next_applicant_id
+    app_id = next_applicant_id
+    
     applicant.append({
-        "id": next_applicant_id,
-        "aid": f"A00{next_applicant_id}",
-        "name": name,
-        "email": email,
-        "dob": dob,
+        "id": app_id,
+        "aid": f"A00{app_id}",
+        "name": data["name"],
+        "email": data["email"],
+        "dob": data.get("dob"), # string format generally passed back from forms
+        "guardian_name": data.get("guardian_name"),
+        "contact": data.get("guardian_contact"),
         "status": "new"
     })
+    
+    marks.append({
+        "applicant_id": app_id,
+        "language1": data.get("language1"),
+        "language2": data.get("language2"),
+        "math": data.get("math"),
+        "science": data.get("science"),
+        "history": data.get("history"),
+        "geography": data.get("geography")
+    })
+    
     next_applicant_id += 1
     return True

@@ -30,14 +30,27 @@ def application_home():
 
 @main_bp.route('/application_portal/apply', methods=['GET', 'POST'])
 def application_apply():
-    if request.method == 'POST':
-        full_name = request.form.get('full_name')
-        email = request.form.get('email')
-        dob = request.form.get('dob')
-        apply_application(full_name, email, dob)
+    from app.form_impl import RegistrationForm
+    form = RegistrationForm()
+    
+    if form.validate_on_submit():
+        apply_application({
+            "name": form.name.data,
+            "email": form.email.data,
+            "dob": form.dob.data.strftime("%Y-%m-%d"),
+            "guardian_name": form.guardian_name.data,
+            "guardian_contact": form.guardian_contact.data,
+            "language1": form.language1.data,
+            "language2": form.language2.data,
+            "math": form.math.data,
+            "science": form.science.data,
+            "history": form.history.data,
+            "geography": form.geography.data,
+        })
         flash("Application successfully submitted.")
         return redirect(url_for('main_bp.application_status'))
-    return render_template('Application Portal/register.html')
+        
+    return render_template('Application Portal/register.html', form=form)
 
 @main_bp.route('/application_portal/status', methods=['GET', 'POST'])
 def application_status():

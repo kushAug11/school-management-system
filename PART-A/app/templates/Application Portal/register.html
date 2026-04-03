@@ -217,6 +217,18 @@
 
         <!-- Note: This form points to your backend route -->
         <form action="{{ url_for('main_bp.application_apply') }}" method="POST">
+            {% if form and form.errors %}
+                <ul style="color: red; background: #fff5f5; padding: 10px; border-radius: 4px; text-align: left; width: 100%;">
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% if form %}
+                {{ form.hidden_tag() }}
+            {% endif %}
             
             <div class="cards-wrapper">
                 
@@ -229,7 +241,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Applicant's Full Name" required>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Applicant's Full Name" required>
                     </div>
 
                     <div class="form-group">
@@ -251,16 +263,15 @@
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="number" id="lang_1" name="lang_1" class="form-control" placeholder="Language 1" required>
+                            <input type="number" id="language1" name="language1" class="form-control" placeholder="Language 1" required>
                         </div>
                         <div class="form-group">
-                            <input type="number" id="lang_2" name="lang_2" class="form-control" placeholder="Language 2" required>
+                            <input type="number" id="language2" name="language2" class="form-control" placeholder="Language 2" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <!-- Using number types assuming these are grades/scores, you can switch to text if not -->
-                        <input type="number" id="mathematics" name="mathematics" class="form-control" placeholder="Mathematics" required>
+                        <input type="number" id="math" name="math" class="form-control" placeholder="Mathematics" required>
                     </div>
 
                     <div class="form-group">
